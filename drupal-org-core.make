@@ -2,7 +2,7 @@ api = 2
 core = 7.x
 
 projects[drupal][type] = core
-projects[drupal][version] = 7.27
+projects[drupal][version] = 7.28
 
 ; the following was ok for 7.22, not sure yet if it is fine anymore
 ; Use vocabulary machine name for permissions
