@@ -140,7 +140,6 @@ then
     drush vset proxy_port "$proxy_port"
 fi
 
-
 # other vars
 echo "setting further variables..."
 drush vset date_format_short "d.m.Y"
