@@ -18,7 +18,8 @@ PWD=`pwd`
 distro_name=`basename "$PWD"`
 echo "distro name: $distro_name"
 site_base=$distro_name
-site_tld="local.lan"
+#site_tld="local.lan"
+site_tld=""
 site_prod="$site_base.$site_tld"
 
 
@@ -49,7 +50,11 @@ then
   SITE=$site_prod
   DB="prod"
 else
-  SITE="$site_base-$1.$site_tld"
+  SITE="$site_base-$1"
+    if $site_tld != ""
+    then
+        SITE="$SITE.$site_tld"
+    fi
   DB="$1"
 fi
 
@@ -112,8 +117,9 @@ cd $INSTALL_DIR
 
 
 ### user, roles, ldap
-echo "drush create roles..."
-drush scr $DRUPAL_ROOT/profiles/$distro_name/modules/distro_name/config/create_roles.script drupal_roles_dev create
+#echo "drush create roles..."
+#drush scr $DRUPAL_ROOT/profiles/$distro_name/modules/distro_name/config/create_roles.script drupal_roles_dev create
+
 
 cd $DRUPAL_ROOT/profiles/$site_distro/modules/contrib
 # clone l10n_update dev version
