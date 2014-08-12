@@ -15,13 +15,17 @@ github_user="groovehunter"
 passwd=`cat ~/.drush/dru_secrets`
 
 PWD=`pwd`
+### custom config section
 distro_name=`basename "$PWD"`
+site_name=$distro_name
 echo "distro name: $distro_name"
 site_base=$distro_name
+site_prod=$site_base
 #site_tld="local.lan"
+# the top level domain, with leading dot
 site_tld=""
-site_prod="$site_base.$site_tld"
 
+### END config section
 
 usage() {
   echo "USAGE: `basename $0` <site:dev|staging|prod>"
@@ -48,14 +52,15 @@ fi
 if test "$1" == "prod"
 then
   SITE=$site_prod
-  DB="prod"
+  DB="$distro_name_prod"
 else
   SITE="$site_base-$1"
-    if $site_tld != ""
-    then
-        SITE="$SITE.$site_tld"
-    fi
-  DB="$1"
+  DB=$distro_name_$1
+fi
+
+if $site_tld
+then
+  SITE="$SITE$site_tld"
 fi
 
 echo "Setting up $SITE \n"
@@ -100,8 +105,8 @@ echo "change permissions in install folder"
 sudo chgrp www-data $INSTALL_DIR/files -R
 sudo chmod g+w $INSTALL_DIR/files -R
 
-### general drupal tweaks
-./setup_drupal_general.sh
+### general drupal tweaks UNUSED, not sure if I keep that
+# ./setup_drupal_general.sh
 
 echo "change directory to custom module folder"
 cd $DRUPAL_ROOT/profiles/$distro_name/modules
@@ -115,19 +120,12 @@ git clone "https://github.com/groovehunter/openspirit_basic_features.git"
 echo "change directory to install folder $INSTALL_DIR"
 cd $INSTALL_DIR
 
-
-### user, roles, ldap
-#echo "drush create roles..."
-#drush scr $DRUPAL_ROOT/profiles/$distro_name/modules/distro_name/config/create_roles.script drupal_roles_dev create
-
-
-cd $DRUPAL_ROOT/profiles/$site_distro/modules/contrib
+cd $DRUPAL_ROOT/profiles/$distro_name/modules/contrib
 # clone l10n_update dev version
-# git clone --recursive --branch 7.x-1.x http://git.drupal.org/project/l10n_update.git
+#git clone --recursive --branch 7.x-1.x http://git.drupal.org/project/l10n_update.git
 # clone taxonomy_csv with fixed issue https://drupal.org/node/1475952
 echo "change directory to install folder $INSTALL_DIR"
 cd $INSTALL_DIR
-
 
 
 ### sonstiges
@@ -153,8 +151,11 @@ drush vset date_format_short "d.m.Y"
 drush en l10n_update -y
 drush language-add de
 drush language-default de
-drush l10n-update
+### outcomment, takes too long for setup script
+#drush l10n-update
 
+### call distro specific setup script
+sh $DRUPAL_ROOT/profiles/$distro_name/setup_$distro_name.sh
 
 echo "FINISHED setup script. Check above for errors!"
 
