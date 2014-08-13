@@ -156,6 +156,7 @@ drush language-default de
 
 ### call distro specific setup script
 sh $DRUPAL_ROOT/profiles/$distro_name/setup_$distro_name.sh
+sh ~/git-test/drupal_syscomp/setup_site_custom.sh
 
 echo "FINISHED setup script. Check above for errors!"
 
