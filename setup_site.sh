@@ -12,6 +12,7 @@
 # call script 
 
 github_user="groovehunter"
+# local DB password, user="drupal"
 passwd=`cat ~/.drush/dru_secrets`
 
 PWD=`pwd`
@@ -137,12 +138,6 @@ drush vset date_default_timezone "Europe/Berlin"
 drush vset user_default_timezone: "0"
 drush vset date_first_day "1"
 
-if [ $http_proxy ]
-then
-    # TODO
-    drush vset proxy_server "$proxy_server"
-    drush vset proxy_port "$proxy_port"
-fi
 
 # other vars
 echo "setting further variables..."
@@ -156,7 +151,9 @@ drush language-default de
 
 ### call distro specific setup script
 sh $DRUPAL_ROOT/profiles/$distro_name/setup_$distro_name.sh
-sh ~/git-test/drupal_syscomp/setup_site_custom.sh
+
+### custom settings, ie. proxy
+sh ~/drupal_custom/setup_site_custom.sh
 
 echo "FINISHED setup script. Check above for errors!"
 
