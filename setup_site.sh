@@ -138,6 +138,11 @@ drush vset date_default_timezone "Europe/Berlin"
 drush vset user_default_timezone: "0"
 drush vset date_first_day "1"
 
+### update notifications
+drush vset update_check_disabled 0
+drush vset update_check_frequency "7"
+drush vset update_notification_threshold "all"
+
 
 # other vars
 echo "setting further variables..."
