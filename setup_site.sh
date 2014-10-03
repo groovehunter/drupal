@@ -86,7 +86,7 @@ sudo rm * -r
 
 echo "\nsetup drupal site according to drush makefile..."
 url_github="https://raw.github.com/$github_user/$distro_name/master/build-$distro_name.make"
-echo "drush make $url_github"
+echo "drush make --no-cache $url_github"
 drush make "$url_github" -y
 
 if test "$?" != 0
@@ -99,7 +99,7 @@ echo $?
 
 echo "\ninstall drupal instance..."
 #drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_$site_name_$DB" -y
-drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_$site_name_$DB" -y
+drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_${site_name}_${DB}" -y
 # OK?
 
 echo "change permissions in install folder"
