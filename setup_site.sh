@@ -12,6 +12,7 @@
 # call script 
 
 github_user="groovehunter"
+branch="master"
 # local DB password, user="drupal"
 passwd=`cat ~/.drush/dru_secrets`
 
@@ -85,7 +86,7 @@ echo "superuser password needed!"
 sudo rm * -r 
 
 echo "\nsetup drupal site according to drush makefile..."
-url_github="https://raw.github.com/$github_user/$distro_name/master/build-$distro_name.make"
+url_github="https://raw.github.com/$github_user/$distro_name/$master/build-$distro_name.make"
 echo "drush make --no-cache $url_github"
 drush make --no-cache "$url_github" -y
 
