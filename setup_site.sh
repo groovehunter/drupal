@@ -87,7 +87,7 @@ sudo rm * -r
 echo "\nsetup drupal site according to drush makefile..."
 url_github="https://raw.github.com/$github_user/$distro_name/master/build-$distro_name.make"
 echo "drush make --no-cache $url_github"
-drush make "$url_github" -y
+drush make --no-cache "$url_github" -y
 
 if test "$?" != 0
 then
