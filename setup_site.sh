@@ -11,9 +11,19 @@
 # cd there
 # call script 
 
+### 
+### github
 github_user="groovehunter"
 branch="master"
+url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
+#branch="hausnetz2"
 # local DB password, user="drupal"
+
+### git local
+url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
+url=$url_local
+### end url 
+
 passwd=`cat ~/.drush/dru_secrets`
 
 PWD=`pwd`
@@ -27,6 +37,16 @@ site_prod=$site_base
 # the top level domain, with leading dot
 site_tld=""
 
+### github
+github_user="groovehunter"
+branch="master"
+url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
+#branch="hausnetz2"
+# local DB password, user="drupal"
+
+### git local
+url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
+url=$url_local
 ### END config section
 
 usage() {
@@ -86,9 +106,8 @@ echo "superuser password needed!"
 sudo rm * -r 
 
 echo "\nsetup drupal site according to drush makefile..."
-url_github="https://raw.github.com/$github_user/$distro_name/$master/build-$distro_name.make"
-echo "drush make --no-cache $url_github"
-drush make --no-cache "$url_github" -y
+echo "drush make --no-cache $url"
+drush make -v --no-cache "$url" -y
 
 if test "$?" != 0
 then
