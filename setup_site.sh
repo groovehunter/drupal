@@ -106,8 +106,10 @@ echo "superuser password needed!"
 sudo rm * -r 
 
 echo "\nsetup drupal site according to drush makefile..."
-echo "drush make --no-cache $url"
-drush make -v --no-cache "$url" -y
+nocache="--no-cache"
+
+echo "drush make $nocache $url"
+drush make -v $nocache "$url" -y
 
 if test "$?" != 0
 then
@@ -163,6 +165,11 @@ drush vset update_check_disabled 0
 drush vset update_check_frequency "7"
 drush vset update_notification_threshold "all"
 
+### admin menu
+drush vset admin_menu_tweak_modules 1
+drush vset admin_menu_tweak_permissions 1
+
+
 
 # other vars
 echo "setting further variables..."
@@ -174,13 +181,12 @@ drush language-default de
 ### outcomment, takes too long for setup script
 #drush l10n-update
 
-### call distro specific setup script
+echo "call distro specific setup script"
+echo "$DRUPAL_ROOT/profiles/$distro_name/setup_$distro_name.sh"
 sh $DRUPAL_ROOT/profiles/$distro_name/setup_$distro_name.sh
 
 ### custom settings, ie. proxy
 sh ~/drupal_custom/setup_site_custom.sh
 
 echo "FINISHED setup script. Check above for errors!"
-
-
 
