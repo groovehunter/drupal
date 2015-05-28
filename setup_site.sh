@@ -5,24 +5,19 @@
 # HOWTO:
 # mkdir: your web drupal root dir
 # cd there,  call: setup_site.sh <configuration>
+# call script 
 
-# SETTINGS:
-nocache="--no-cache"
-verbose="" #"-v"
-passwd=`cat ~/.drush/dru_secrets`
+### 
+#verbose="-v"
+verbose=""
+#nocache="--no-cache"
+nocache=""
+### github
+
 PWD=`pwd`
-### custom config section
 distro_name=`basename "$PWD"`
 export distro_name
-site_name=$distro_name
-echo "distro name: $distro_name"
-site_base=$distro_name
-site_prod=$site_base
-#site_tld="local.lan"
-# the top level domain, with leading dot
-site_tld=""
 
-### github
 github_user="groovehunter"
 branch="master"
 url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
@@ -32,7 +27,30 @@ url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$dist
 ### git local
 url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
 url=$url_local
+### end url 
 ### END config section
+
+# SETTINGS:
+nocache="--no-cache"
+verbose="" #"-v"
+passwd=`cat ~/.drush/dru_secrets`
+PWD=`pwd`
+### custom config section
+distro_name=`basename "$PWD"`
+export distro_name
+
+### custom config section
+site_name=$distro_name
+echo "distro name: $distro_name"
+site_base=$distro_name
+site_prod=$site_base
+#site_tld="local.lan"
+# the top level domain, with leading dot
+site_tld=""
+
+### github
+# local DB password, user="drupal"
+
 
 usage() {
   echo "USAGE: `basename $0` <site:dev|staging|prod>"
@@ -122,7 +140,7 @@ cd $site_name
 
 
 echo "get custom modules via git clone..."
-git clone "https://github.com/groovehunter/openspirit_basic_features.git"
+#git clone "https://github.com/groovehunter/openspirit_basic_features.git"
 
 echo "change directory to install folder $INSTALL_DIR"
 cd $INSTALL_DIR
