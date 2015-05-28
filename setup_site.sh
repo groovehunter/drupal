@@ -1,34 +1,19 @@
 #!/bin/bash
 
-# generalized main setup script for drupal distros 
-# code hosted on github
-# SETTINGS:
-# github_user
-# ...
+# generalized main setup script for drupal distros, code hosted on github
 
 # HOWTO:
 # mkdir: your web drupal root dir
-# cd there
-# call script 
+# cd there,  call: setup_site.sh <configuration>
 
-### 
-### github
-github_user="groovehunter"
-branch="master"
-url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
-#branch="hausnetz2"
-# local DB password, user="drupal"
-
-### git local
-url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
-url=$url_local
-### end url 
-
+# SETTINGS:
+nocache="--no-cache"
+verbose="" #"-v"
 passwd=`cat ~/.drush/dru_secrets`
-
 PWD=`pwd`
 ### custom config section
 distro_name=`basename "$PWD"`
+export distro_name
 site_name=$distro_name
 echo "distro name: $distro_name"
 site_base=$distro_name
@@ -106,10 +91,9 @@ echo "superuser password needed!"
 sudo rm * -r 
 
 echo "\nsetup drupal site according to drush makefile..."
-nocache="--no-cache"
 
 echo "drush make $nocache $url"
-drush make -v $nocache "$url" -y
+drush make $verbose $nocache "$url" -y
 
 if test "$?" != 0
 then
