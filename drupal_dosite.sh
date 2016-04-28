@@ -15,7 +15,7 @@ distro_name="openspirit"
 export distro_name
 
 github_user="groovehunter"
-branch="master"
+branch="d8"
 url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
 # local DB password, user="drupal"
 
