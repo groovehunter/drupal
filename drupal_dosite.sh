@@ -1,12 +1,7 @@
 #!/bin/bash
-
-# generalized main setup script for drupal distros, code hosted on github
-# 
-
-# HOWTO:
-# mkdir: your web drupal root dir
-# cd there,  call: setup_site.sh <configuration>
-# call script 
+# vom orig setup_site abgekupfert, sollte noch vereinfacht werden 
+# ziel: keine distro sondern setup von dev sites von einer lieblings
+# dev distro,m zb openspirit
 
 ### 
 verbose="-v"
@@ -16,15 +11,12 @@ nocache=""
 ### github
 
 PWD=`pwd`
-### was designed to use parent dir as distro name.
-distro_name=`basename "$PWD"`
-#distro_name="openspirit"
+distro_name="openspirit"
 export distro_name
 
 github_user="groovehunter"
 branch="master"
 url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$distro_name.make"
-#branch="hausnetz2"
 # local DB password, user="drupal"
 
 ### git local
@@ -33,58 +25,21 @@ url=$url_local
 ### end url 
 ### END config section
 
-# SETTINGS:
-nocache="--no-cache"
-verbose="" #"-v"
-passwd=`cat ~/.drush/dru_secrets`
-PWD=`pwd`
-### custom config section
-distro_name=`basename "$PWD"`
-export distro_name
 
+# SETTINGS:
+passwd=`cat ~/.drush/dru_secrets`
 ### custom config section
-site_name=$distro_name
+site_name=`basename $PWD`
 echo "distro name: $distro_name"
 site_base=$distro_name
 site_prod=$site_base
-#site_tld="local.lan"
-# the top level domain, with leading dot
 site_tld=""
 
 ### github
 # local DB password, user="drupal"
 
-
-usage() {
-  echo "USAGE: `basename $0` <site:dev|staging|prod>"
-  exit
-}
-
-# search string is the first argument and the rest are the array elements
-contains() {
-  local e
-  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
-  return 1
-}
-
-
-avail=("dev" "staging" "prod")
-if contains "$1" "${avail[@]}"
-then 
-  echo "$1 is defined."
-else
-  echo "ERROR: $1 is not defined as site"
-  usage
-fi
-
-if test "$1" == "prod"
-then
-  SITE=$site_prod
-  DB="$distro_name_prod"
-else
-  SITE="$site_base-$1"
-  DB=$distro_name_$1
-fi
+SITE="$site_base"
+DB=$distro_name_$1
 
 if $site_tld
 then
@@ -124,7 +79,8 @@ fi
 echo $?
 #exit
 
-echo "\ninstall drupal instance..."
+echo
+echo "install drupal instance..."
 #drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_$site_name_$DB" -y
 drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_${site_name}_${DB}" -y
 # OK?
