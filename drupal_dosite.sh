@@ -6,8 +6,8 @@
 ### 
 verbose="-v"
 #verbose=""
-#nocache="--no-cache"
-nocache=""
+nocache="--no-cache"
+#nocache=""
 ### github
 
 PWD=`pwd`
@@ -20,7 +20,7 @@ url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$dist
 # local DB password, user="drupal"
 
 ### git local
-url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
+url_local="file:///home/konnertz/git-github/$distro_name/build-$distro_name.make"
 url=$url_local
 ### end url 
 ### END config section
