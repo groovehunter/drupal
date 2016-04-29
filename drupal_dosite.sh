@@ -6,8 +6,8 @@
 ### 
 verbose="-v"
 #verbose=""
-#nocache="--no-cache"
-nocache=""
+nocache="--no-cache"
+#nocache=""
 ### github
 
 PWD=`pwd`
@@ -77,17 +77,19 @@ then
   exit
 fi
 echo $?
-#exit
 
+#### DEV
+exit
 echo
 echo "install drupal instance..."
 #drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_$site_name_$DB" -y
 drush si $distro_name --db-url="mysql://drupal:$passwd@localhost/drupal_${site_name}_${DB}" -y
 # OK?
 
+
 echo "change permissions in install folder"
-sudo chgrp www-data $INSTALL_DIR/files -R
-sudo chmod g+w $INSTALL_DIR/files -R
+sudo chgrp www-data $INSTALL_DIR/ -R
+sudo chmod g+w $INSTALL_DIR/ -R
 
 ### general drupal tweaks UNUSED, not sure if I keep that
 # ./setup_drupal_general.sh
@@ -114,27 +116,27 @@ cd $INSTALL_DIR
 
 ### sonstiges
 echo "setting site variables..."
-drush vset site_name "$site_name"
-drush vset site_default_country de
-drush vset configurable_timezones 0
-drush vset date_default_timezone "Europe/Berlin"
-drush vset user_default_timezone: "0"
-drush vset date_first_day "1"
+#drush vset site_name "$site_name"
+#drush vset site_default_country de
+#drush vset configurable_timezones 0
+#drush vset date_default_timezone "Europe/Berlin"
+#drush vset user_default_timezone: "0"
+#drush vset date_first_day "1"
 
 ### update notifications
-drush vset update_check_disabled 0
-drush vset update_check_frequency "7"
-drush vset update_notification_threshold "all"
+#drush vset update_check_disabled 0
+#drush vset update_check_frequency "7"
+#drush vset update_notification_threshold "all"
 
 ### admin menu
-drush vset admin_menu_tweak_modules 1
-drush vset admin_menu_tweak_permissions 1
+#drush vset admin_menu_tweak_modules 1
+#drush vset admin_menu_tweak_permissions 1
 
 
 
 # other vars
 echo "setting further variables..."
-drush vset date_format_short "d.m.Y"
+#drush vset date_format_short "d.m.Y"
 
 drush en l10n_update -y
 drush language-add de
