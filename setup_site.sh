@@ -20,7 +20,7 @@ url_github="https://raw.github.com/$github_user/$distro_name/$branch/build-$dist
 # local DB password, user="drupal"
 
 ### git local
-url_local="file:///home/konnertz/git-test/$distro_name/build-$distro_name.make"
+url_local="file:///home/konnertz/git-github/drupal/$distro_name/build-$distro_name.make"
 url=$url_local
 ### end url 
 
